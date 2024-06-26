@@ -171,7 +171,7 @@ public static class OpenIddictClientSystemIntegrationHelpers
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         static bool IsApiPresent() => ApiInformation.IsMethodPresent(
-            typeName           : typeof(AppInstance).FullName,
+            typeName           : typeof(AppInstance).FullName!,
             methodName         : nameof(AppInstance.GetActivatedEventArgs),
             inputParameterCount: 0);
 #else
@@ -193,7 +193,7 @@ public static class OpenIddictClientSystemIntegrationHelpers
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         static bool IsApiPresent() => ApiInformation.IsMethodPresent(
-            typeName           : typeof(Launcher).FullName,
+            typeName           : typeof(Launcher).FullName!,
             methodName         : nameof(Launcher.LaunchUriAsync),
             inputParameterCount: 1);
 #else
@@ -215,7 +215,7 @@ public static class OpenIddictClientSystemIntegrationHelpers
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         static bool IsApiPresent() => ApiInformation.IsMethodPresent(
-            typeName           : typeof(WebAuthenticationBroker).FullName,
+            typeName           : typeof(WebAuthenticationBroker).FullName!,
             methodName         : nameof(WebAuthenticationBroker.AuthenticateAsync),
             inputParameterCount: 3);
 #else
@@ -264,77 +264,6 @@ public static class OpenIddictClientSystemIntegrationHelpers
             out uint ReturnLength);
     }
 
-#if SUPPORTS_PRESENTATION_CONTEXT_PROVIDER
-    /// <summary>
-    /// Gets a reference to the current <see cref="NativeWindow"/>.
-    /// </summary>
-    /// <returns>The <see cref="NativeWindow"/> or <see langword="null"/> if it couldn't be resolved.</returns>
-    internal static NativeWindow? GetCurrentUIWindow()
-    {
-#if SUPPORTS_APPKIT
-        return NSApplication.SharedApplication.KeyWindow;
-#elif SUPPORTS_UIKIT
-        var window = GetKeyWindow();
-        if (window is not null && window.WindowLevel == UIWindowLevel.Normal)
-        {
-            return window;
-        }
-
-        return GetWindows()
-            ?.OrderByDescending(static window => window.WindowLevel)
-            ?.Where(static window => window.RootViewController is not null)
-            ?.Where(static window => window.WindowLevel == UIWindowLevel.Normal)
-            ?.FirstOrDefault();
-
-        static UIWindow? GetKeyWindow()
-        {
-            if (OperatingSystem.IsIOSVersionAtLeast(13))
-            {
-                try
-                {
-#pragma warning disable CA1416
-                    using var scenes = UIApplication.SharedApplication.ConnectedScenes;
-                    var scene = scenes.ToArray<UIWindowScene>().FirstOrDefault();
-
-                    return scene?.Windows.FirstOrDefault();
-#pragma warning restore CA1416
-                }
-
-                catch (InvalidCastException)
-                {
-                    return null;
-                }
-            }
-
-            return UIApplication.SharedApplication.KeyWindow;
-        }
-
-        static UIWindow[]? GetWindows()
-        {
-            if (OperatingSystem.IsIOSVersionAtLeast(13))
-            {
-                try
-                {
-#pragma warning disable CA1416
-                    using var scenes = UIApplication.SharedApplication.ConnectedScenes;
-                    var scene = scenes.ToArray<UIWindowScene>().FirstOrDefault();
-
-                    return scene?.Windows;
-#pragma warning restore CA1416
-                }
-
-                catch (InvalidCastException)
-                {
-                    return null;
-                }
-            }
-
-            return UIApplication.SharedApplication.Windows;
-        }
-#endif
-    }
-#endif
-
 #if SUPPORTS_WINDOWS_RUNTIME
     /// <summary>
     /// Resolves the protocol activation using the Windows Runtime APIs, if applicable.
@@ -357,7 +286,9 @@ public static class OpenIddictClientSystemIntegrationHelpers
             return null;
         }
     }
+#endif
 
+#if SUPPORTS_WINDOWS_RUNTIME
     /// <summary>
     /// Starts the system browser using the Windows Runtime APIs.
     /// </summary>
@@ -417,11 +348,13 @@ public static class OpenIddictClientSystemIntegrationHelpers
     {
         try
         {
+#pragma warning disable CA1416 // Not supported on iOS and macOS
             await Task.Run(() => Process.Start(new ProcessStartInfo
             {
                 FileName = uri.AbsoluteUri,
                 UseShellExecute = true
             }));
+#pragma warning restore CA1416
 
             return true;
         }

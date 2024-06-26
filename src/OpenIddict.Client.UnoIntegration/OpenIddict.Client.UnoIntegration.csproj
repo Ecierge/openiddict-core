@@ -1,0 +1,88 @@
+﻿<Project Sdk="Uno.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>
+      net8.0;
+      net8.0-ios;
+      net8.0-maccatalyst;
+      net8.0-android;
+      net8.0-windows10.0.19041;
+      net8.0-desktop
+    </TargetFrameworks>
+      <!--net8.0-browserwasm;-->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UnoSingleProject>true</UnoSingleProject>
+    <OutputType>Library</OutputType>
+    <!-- Ensures the .xr.xml files are generated in a proper layout folder -->
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SignAssembly>false</SignAssembly>
+    <DefineConstants>$(DefineConstants);SUPPORTS_WINDOWS_RUNTIME</DefineConstants>
+    <!--<IncludeInternalExtensions>false</IncludeInternalExtensions>-->
+
+    <!--
+      UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
+      https://aka.platform.uno/singleproject-features
+    -->
+    <!--
+    <UnoFeatures></UnoFeatures>
+    -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationActivation.cs" Link="OpenIddictClientSystemIntegrationActivation.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationActivationHandler.cs" Link="OpenIddictClientSystemIntegrationActivationHandler.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationAuthenticationMode.cs" Link="OpenIddictClientSystemIntegrationAuthenticationMode.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationBuilder.cs" Link="OpenIddictClientSystemIntegrationBuilder.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationConfiguration.cs" Link="OpenIddictClientSystemIntegrationConfiguration.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationConstants.cs" Link="OpenIddictClientSystemIntegrationConstants.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationExtensions.cs" Link="OpenIddictClientSystemIntegrationExtensions.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationHandlerFilters.cs" Link="OpenIddictClientSystemIntegrationHandlerFilters.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationHandlers.Authentication.cs" Link="OpenIddictClientSystemIntegrationHandlers.Authentication.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationHandlers.cs" Link="OpenIddictClientSystemIntegrationHandlers.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationHandlers.Session.cs" Link="OpenIddictClientSystemIntegrationHandlers.Session.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationHelpers.cs" Link="OpenIddictClientSystemIntegrationHelpers.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationHttpListener.cs" Link="OpenIddictClientSystemIntegrationHttpListener.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationMarshal.cs" Link="OpenIddictClientSystemIntegrationMarshal.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationOptions.cs" Link="OpenIddictClientSystemIntegrationOptions.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationPipeListener.cs" Link="OpenIddictClientSystemIntegrationPipeListener.cs" />
+    <Compile Include="..\OpenIddict.Client.SystemIntegration\OpenIddictClientSystemIntegrationService.cs" Link="OpenIddictClientSystemIntegrationService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="OpenIddict.Abstractions" />
+    <Using Include="OpenIddict.Abstractions.OpenIddictConstants" Static="true" />
+    <Using Include="OpenIddict.Abstractions.OpenIddictResources" Alias="SR" />
+    <Using Include="OpenIddict.Client.OpenIddictClientEvents" Static="true" />
+    <Using Include="OpenIddict.Client.OpenIddictClientHandlers" Static="true" />
+    <Using Include="OpenIddict.Client.OpenIddictClientHandlerFilters" Static="true" />
+    <Using Include="OpenIddict.Client.SystemIntegration.OpenIddictClientSystemIntegrationHandlers" Static="true" />
+    <Using Include="OpenIddict.Client.SystemIntegration.OpenIddictClientSystemIntegrationHandlerFilters" Static="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Net.Http.Headers" />
+    <PackageReference Include="Uno.Extensions.Hosting.WinUI" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+    <!--
+    If you encounter this error message:
+
+      error NETSDK1148: A referenced assembly was compiled using a newer version of Microsoft.Windows.SDK.NET.dll.
+      Please update to a newer .NET SDK in order to reference this assembly.
+
+    This means that the two packages below must be aligned with the "build" version number of
+    the "Microsoft.Windows.SDK.BuildTools" package above, and the "revision" version number
+    must be the highest found in https://www.nuget.org/packages/Microsoft.Windows.SDK.NET.Ref.
+    -->
+    <!-- <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.22621.28" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22621.28" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenIddict.Abstractions\OpenIddict.Abstractions.csproj" />
+    <ProjectReference Include="..\OpenIddict.Client\OpenIddict.Client.csproj" />
+  </ItemGroup>
+
+</Project>

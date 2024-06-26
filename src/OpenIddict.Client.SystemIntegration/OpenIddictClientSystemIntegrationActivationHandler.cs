@@ -70,7 +70,7 @@ public sealed class OpenIddictClientSystemIntegrationActivationHandler : IHosted
         [MethodImpl(MethodImplOptions.NoInlining)]
         static OpenIddictClientSystemIntegrationActivation? GetProtocolActivation()
         {
-#if SUPPORTS_WINDOWS_RUNTIME
+#if SUPPORTS_WINDOWS_RUNTIME && !HAS_UNO_WINUI
             // On platforms that support WinRT, always favor the AppInstance.GetActivatedEventArgs() API.
             if (IsAppInstanceActivationSupported() && GetProtocolActivationUriWithWindowsRuntime() is Uri uri)
             {
