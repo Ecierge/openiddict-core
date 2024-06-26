@@ -17,7 +17,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <SignAssembly>false</SignAssembly>
-    <DefineConstants>$(DefineConstants);SUPPORTS_WINDOWS_RUNTIME;SUPPORTS_CERTIFICATE_GENERATION;SUPPORTS_ECDSA</DefineConstants>
+    <DefineConstants Condition="''!='hint: Webassembly'">$(DefineConstants);SUPPORTS_WINDOWS_RUNTIME</DefineConstants>
+    <DefineConstants Condition="''=='hint: Webassembly'">$(DefineConstants);SUPPORTS_WINDOWS_RUNTIME;SUPPORTS_CERTIFICATE_GENERATION;SUPPORTS_ECDSA</DefineConstants>
     <!--<IncludeInternalExtensions>false</IncludeInternalExtensions>-->
 
     <!--
