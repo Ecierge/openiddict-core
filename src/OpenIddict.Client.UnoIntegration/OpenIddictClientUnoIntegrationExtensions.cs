@@ -17,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// </summary>
 public static class OpenIddictClientUnoIntegrationExtensions
 {
+    // Required until https://github.com/unoplatform/uno.extensions/issues/2381
     /// <summary>
     /// Adds handling of protocol activation
     /// </summary>
@@ -30,10 +31,13 @@ public static class OpenIddictClientUnoIntegrationExtensions
             .ConfigureServices((ctx, services) =>
             {
 #if HAS_UNO
+                // Required until https://github.com/unoplatform/uno.extensions/issues/2396
                 if (!String.IsNullOrEmpty(applicationName))
+                {
                     ctx.HostingEnvironment.ApplicationName = applicationName;
-#endif
+                }
                 services.AddSingleton(ctx.HostingEnvironment);
+#endif
                 configureDelegate(services);
                 services.AddSingleton<IHostApplicationLifetime, ActivationHostApplicationLifetime>();
             })
@@ -47,6 +51,7 @@ public static class OpenIddictClientUnoIntegrationExtensions
         return builder.Configure(host =>
             host.ConfigureServices((ctx, services) =>
             {
+                // Required until https://github.com/unoplatform/uno.extensions/issues/2396
                 if (!String.IsNullOrEmpty(applicationName))
                 {
                     ctx.HostingEnvironment.ApplicationName = applicationName;
