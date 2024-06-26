@@ -8,4 +8,3 @@ public sealed partial class LoginPage : Page
         this.InitializeComponent();
     }
 }
-

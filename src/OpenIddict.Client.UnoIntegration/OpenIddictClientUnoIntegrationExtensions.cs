@@ -4,15 +4,11 @@
  * the license and the contributors participating to this project.
  */
 
-using System.Runtime.InteropServices;
-
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 
-using OpenIddict.Client;
-using OpenIddict.Client.SystemIntegration;
 using OpenIddict.Client.UnoIntegration;
+
+using Windows.UI.ViewManagement.Core;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -26,19 +22,38 @@ public static class OpenIddictClientUnoIntegrationExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="configureDelegate"></param>
-    public static async Task<IApplicationBuilder> UseOpenIddictClientActivationHandlingAsync(this IApplicationBuilder builder, Action<IServiceCollection> configureDelegate)
+    /// <param name="applicationName"></param>
+    public static async Task<IApplicationBuilder> UseOpenIddictClientActivationHandlingAsync(this IApplicationBuilder builder, Action<IServiceCollection> configureDelegate, string? applicationName = null)
     {
+#if WINDOWS || DESKTOP8_0_OR_GREATER
         var host = new Microsoft.Extensions.Hosting.HostBuilder()
-            .ConfigureServices(services =>
+            .ConfigureServices((ctx, services) =>
             {
+#if HAS_UNO
+                if (!String.IsNullOrEmpty(applicationName))
+                    ctx.HostingEnvironment.ApplicationName = applicationName;
+#endif
+                services.AddSingleton(ctx.HostingEnvironment);
                 configureDelegate(services);
                 services.AddSingleton<IHostApplicationLifetime, ActivationHostApplicationLifetime>();
             })
             .Build();
         await host.RunAsync();
         host.Dispose();
+#else
+        await Task.CompletedTask;
+#endif
 
-        return builder.Configure(host => host.ConfigureServices(configureDelegate));
+        return builder.Configure(host =>
+            host.ConfigureServices((ctx, services) =>
+            {
+                if (!String.IsNullOrEmpty(applicationName))
+                {
+                    ctx.HostingEnvironment.ApplicationName = applicationName;
+                }
+                services.AddSingleton(ctx.HostingEnvironment);
+                configureDelegate(services);
+            }));
     }
 
     /// <summary>

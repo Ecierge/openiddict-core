@@ -59,7 +59,12 @@ public partial class App : Application
                                .AddDevelopmentSigningCertificate();
 
                         //options.UseSystemIntegration();
-                        options.UseUnoIntegration();
+                        options.UseUnoIntegration()
+#if ANDROID || IOS
+                            .DisableEmbeddedWebServer()
+                            .DisablePipeServer()
+#endif
+                        ;
 
                         // Register the System.Net.Http integration and use the identity of the current
                         // assembly as a more specific user agent, which can be useful when dealing with
@@ -70,7 +75,11 @@ public partial class App : Application
                         // Add a client registration matching the client application definition in the server project.
                         options.AddRegistration(new OpenIddictClientRegistration
                         {
+#if ANDROID
+                            Issuer = new Uri("https://10.0.2.2:44395/", UriKind.Absolute),
+#else
                             Issuer = new Uri("https://localhost:44395/", UriKind.Absolute),
+#endif
                             ProviderName = "Local",
 
                             ClientId = "uno",
@@ -107,7 +116,8 @@ public partial class App : Application
                 //
                 // Note: in a real world application, this step should be part of a setup script.
                 services.AddHostedService<Worker>();
-            });
+            },
+            "OpenIddict.Sandbox.Uno.Client");
         builder
             // Add navigation support for toolkit controls such as TabBar and NavigationView
             .UseToolkitNavigation()
