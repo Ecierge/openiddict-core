@@ -158,7 +158,7 @@ public static class OpenIddictClientSystemIntegrationHelpers
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         static bool IsApiPresent() => ApiInformation.IsMethodPresent(
-            typeName           : typeof(AppInstance).FullName,
+            typeName           : typeof(AppInstance).FullName!,
             methodName         : nameof(AppInstance.GetActivatedEventArgs),
             inputParameterCount: 0);
 #else
@@ -180,7 +180,7 @@ public static class OpenIddictClientSystemIntegrationHelpers
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         static bool IsApiPresent() => ApiInformation.IsMethodPresent(
-            typeName           : typeof(Launcher).FullName,
+            typeName           : typeof(Launcher).FullName!,
             methodName         : nameof(Launcher.LaunchUriAsync),
             inputParameterCount: 1);
 #else
@@ -202,7 +202,7 @@ public static class OpenIddictClientSystemIntegrationHelpers
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         static bool IsApiPresent() => ApiInformation.IsMethodPresent(
-            typeName           : typeof(WebAuthenticationBroker).FullName,
+            typeName           : typeof(WebAuthenticationBroker).FullName!,
             methodName         : nameof(WebAuthenticationBroker.AuthenticateAsync),
             inputParameterCount: 3);
 #else
