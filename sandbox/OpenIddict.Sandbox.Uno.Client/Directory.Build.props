@@ -17,8 +17,8 @@
 
   <!-- See https://aka.platform.uno/using-uno-sdk#implicit-packages for more information regarding the Implicit Packages version properties. -->
   <PropertyGroup>
-    <UnoExtensionsVersion>4.2.2</UnoExtensionsVersion>
-    <UnoToolkitVersion>6.1.8</UnoToolkitVersion>
-    <UnoThemesVersion>5.1.7</UnoThemesVersion>
+    <UnoExtensionsVersion>5.1.2</UnoExtensionsVersion> <!-- https://www.nuget.org/packages/Uno.Extensions.Core -->
+    <!--<UnoToolkitVersion>6.3.6</UnoToolkitVersion>--> <!-- https://www.nuget.org/packages/Uno.Toolkit -->
+    <UnoThemesVersion>5.3.1</UnoThemesVersion> <!-- https://www.nuget.org/packages/Uno.Themes -->
   </PropertyGroup>
 </Project>

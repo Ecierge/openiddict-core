@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Uno: net8.0 | Debug",
+            "name": "Uno: net9.0 | Debug",
             "type": "Uno",
             "request": "launch"
         }
