@@ -67,6 +67,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Apple.CryptoKit\Apple.CryptoKit.csproj" Condition=" '$(TargetFramework)' == 'net9.0-ios' OR '$(TargetFramework)' == 'net9.0-maccatalyst' " />
     <ProjectReference Include="..\..\src\OpenIddict.Abstractions\OpenIddict.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\OpenIddict.Client.SystemIntegration\OpenIddict.Client.SystemIntegration.csproj" />
     <ProjectReference Include="..\..\src\OpenIddict.Client.SystemNetHttp\OpenIddict.Client.SystemNetHttp.csproj" />

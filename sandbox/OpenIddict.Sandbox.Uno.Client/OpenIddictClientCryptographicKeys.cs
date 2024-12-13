@@ -7,8 +7,10 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Apple.CryptoKit;
-using Foundation;
+#if IOS || MACCATALYST
+    using Apple.CryptoKit;
+    using Foundation;
+#endif
 using Microsoft.IdentityModel.Tokens;
 using Uno;
 
@@ -39,6 +41,7 @@ internal static class OpenIddictClientCryptographicKeys
 
         return new RsaSecurityKey(myRsa);
 #else
+        System.Security.Cryptography.CngKey key;
         #pragma warning disable CA2000 // Dispose objects before losing scope
                 if (CngKey.Exists(name, provider, CngKeyOpenOptions.UserKey))
                 {
