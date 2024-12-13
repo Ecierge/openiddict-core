@@ -1,4 +1,1 @@
-namespace Apple.CryptoKit
-{
-
-}
+namespace Apple.CryptoKit;

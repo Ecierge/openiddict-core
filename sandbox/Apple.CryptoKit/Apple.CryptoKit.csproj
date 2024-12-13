@@ -1,13 +1,48 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-ios</TargetFramework>
+    <!-- <TargetFrameworks>net9.0-ios;net9.0-maccatalyst</TargetFrameworks> -->
+    <TargetFrameworks>net9.0-ios</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <IsBindingProject>true</IsBindingProject>
+
+    <!--
+      Enable trim analyzers for class libraries.
+      To learn more, see: https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming
+    -->
+    <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
+
+    <ItemGroup>
+      <!-- <NativeReference Include="NativeLib/KeychainStorage.framework">
+        <IsCxx>False</IsCxx>
+      </NativeReference> -->
+
+      <NativeReference Include="NativeLib/KeychainStorage.xcframework">
+        <Kind>Framework</Kind>
+      </NativeReference>
+    </ItemGroup>
 
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
     <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
   </ItemGroup>
+
+  <!-- Reference to Xcode project -->
+  <!-- <ItemGroup>
+    <NLIXcodeProjectReference Include="../NativeLib/KeychainStorage/KeychainStorage.xcodeproj">
+      <SchemeName>KeychainStorage</SchemeName>
+      <SharpieNamespace>Apple.CryptoKit</SharpieNamespace>
+      <SharpieBind>true</SharpieBind>
+      < Metadata applicable to @(NativeReference) will be used if set, otherwise the following defaults will be used:
+      <Kind>Framework</Kind>
+      <SmartLink>true</SmartLink>
+      - ->
+    </NLIXcodeProjectReference>
+  </ItemGroup> -->
+
+  <!-- Reference to NuGet for building bindings -->
+  <!-- <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Maui.NativeLibraryInterop.BuildTasks" Version="0.0.1-pre1" PrivateAssets="all" />
+  </ItemGroup> -->
 </Project>
