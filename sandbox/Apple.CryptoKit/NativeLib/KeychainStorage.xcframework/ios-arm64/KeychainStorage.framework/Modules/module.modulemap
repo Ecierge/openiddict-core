@@ -1,0 +1,6 @@
+framework module KeychainStorage {
+  umbrella header "KeychainStorage.h"
+  export *
+
+  module * { export * }
+}
