@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net9.0</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(SupportsWindowsTargeting)' == 'true' ">net48</TargetFrameworks>
     <TypeScriptEnabled>false</TypeScriptEnabled>
     <Nullable>disable</Nullable>
   </PropertyGroup>

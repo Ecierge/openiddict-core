@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net48;net9.0</TargetFrameworks>
-  </PropertyGroup>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+		<TargetFrameworks Condition=" '$(SupportsWindowsTargeting)' == 'true' ">net48</TargetFrameworks>
+	</PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenIddict.Client.SystemIntegration\OpenIddict.Client.SystemIntegration.csproj" />
