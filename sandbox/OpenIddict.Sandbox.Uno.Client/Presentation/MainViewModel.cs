@@ -75,7 +75,7 @@ public partial class MainViewModel : ObservableObject
                 // Ask OpenIddict to initiate the logout flow (typically, by starting the system browser).
                 var result = await service.SignOutInteractivelyAsync(new()
                 {
-                    AdditionalLogoutRequestParameters = parameters,
+                    AdditionalEndSessionRequestParameters = parameters,
                     CancellationToken = source.Token,
                     ProviderName = provider
                 });
