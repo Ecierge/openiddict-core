@@ -12,15 +12,15 @@
     <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
-    <ItemGroup>
-      <!-- <NativeReference Include="NativeLib/KeychainStorage.framework">
+  <ItemGroup>
+    <!-- <NativeReference Include="NativeLib/KeychainStorage.framework">
         <IsCxx>False</IsCxx>
       </NativeReference> -->
 
-      <NativeReference Include="NativeLib/KeychainStorage.xcframework">
-        <Kind>Framework</Kind>
-      </NativeReference>
-    </ItemGroup>
+    <NativeReference Include="NativeLib/KeychainStorage.xcframework">
+      <Kind>Framework</Kind>
+    </NativeReference>
+  </ItemGroup>
 
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />

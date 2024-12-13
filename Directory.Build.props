@@ -99,11 +99,15 @@
                  ('$(GITHUB_ACTIONS)' == 'true' Or (Exists('$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETCore\v5.0') And
                                                     Exists('$(MSBuildProgramFiles32)\Windows Kits\10\References\10.0.17763.0'))) ">true</SupportsUniversalWindowsPlatformTargeting>
 
-    <NetFrameworkTargetFrameworks Condition=" '$(NetFrameworkTargetFrameworks)' == '' ">
+    <NetFrameworkTargetFrameworks Condition=" '$(NetFrameworkTargetFrameworks)' == '' And $([System.OperatingSystem]::IsWindows()) ">
       net462;
       net472;
       net48
     </NetFrameworkTargetFrameworks>
+
+    <SandboxNetFrameworkTargetFrameworks Condition=" '$(SandboxNetFrameworkTargetFrameworks)' == '' And $([System.OperatingSystem]::IsWindows()) ">
+      net48
+    </SandboxNetFrameworkTargetFrameworks>
 
     <NetCoreTargetFrameworks Condition=" '$(NetCoreTargetFrameworks)' == '' ">
       net6.0;
@@ -111,11 +115,20 @@
       net9.0
     </NetCoreTargetFrameworks>
 
+    <SandboxNetCoreTargetFrameworks Condition=" '$(SandboxNetCoreTargetFrameworks)' == '' ">
+      net9.0
+    </SandboxNetCoreTargetFrameworks>
+
     <NetCoreAndroidTargetFrameworks
       Condition=" '$(NetCoreAndroidTargetFrameworks)' == '' And '$(SupportsAndroidTargeting)' == 'true' ">
       net8.0-android34.0;
       net9.0-android35.0
     </NetCoreAndroidTargetFrameworks>
+
+    <SandboxNetCoreAndroidTargetFrameworks
+      Condition=" '$(SandboxNetCoreAndroidTargetFrameworks)' == '' And '$(SupportsAndroidTargeting)' == 'true' ">
+      net9.0-android
+    </SandboxNetCoreAndroidTargetFrameworks>
 
     <NetCoreIOSTargetFrameworks
       Condition=" '$(NetCoreIOSTargetFrameworks)' == '' And '$(SupportsIOSTargeting)' == 'true' ">
@@ -123,11 +136,21 @@
       net9.0-ios18.0
     </NetCoreIOSTargetFrameworks>
 
+    <SandboxNetCoreIOSTargetFrameworks
+      Condition=" '$(SandboxNetCoreIOSTargetFrameworks)' == '' And '$(SupportsIOSTargeting)' == 'true' ">
+      net9.0-ios
+    </SandboxNetCoreIOSTargetFrameworks>
+
     <NetCoreMacCatalystTargetFrameworks
       Condition=" '$(NetCoreMacCatalystTargetFrameworks)' == '' And '$(SupportsMacCatalystTargeting)' == 'true' ">
       net8.0-maccatalyst18.0;
       net9.0-maccatalyst18.0
     </NetCoreMacCatalystTargetFrameworks>
+
+    <SandboxNetCoreMacCatalystTargetFrameworks
+      Condition=" '$(SandboxNetCoreMacCatalystTargetFrameworks)' == '' And '$(SupportsMacCatalystTargeting)' == 'true' ">
+      net9.0-maccatalyst
+    </SandboxNetCoreMacCatalystTargetFrameworks>
 
     <NetCoreMacOSTargetFrameworks
       Condition=" '$(NetCoreMacOSTargetFrameworks)' == '' And '$(SupportsMacOSTargeting)' == 'true' ">
@@ -145,13 +168,18 @@
       net9.0-windows10.0.17763
     </NetCoreWindowsTargetFrameworks>
 
+    <SandboxNetCoreWindowsTargetFrameworks
+      Condition=" '$(SandboxNetCoreWindowsTargetFrameworks)' == '' And '$(SupportsWindowsTargeting)' == 'true' ">
+      net9.0-windows10.0.19041
+    </SandboxNetCoreWindowsTargetFrameworks>
+
     <NetStandardTargetFrameworks Condition=" '$(NetStandardTargetFrameworks)' == '' ">
       netstandard2.0;
       netstandard2.1
     </NetStandardTargetFrameworks>
 
     <UniversalWindowsPlatformTargetFrameworks
-      Condition=" '$(UniversalWindowsPlatformTargetFrameworks)' == '' And '$(SupportsUniversalWindowsPlatformTargeting)' == 'true' ">
+      Condition=" '$(UniversalWindowsPlatformTargetFrameworks)' == '' And '$(SupportsUniversalWindowsPlatformTargeting)' == 'true' And $([System.OperatingSystem]::IsWindows()) ">
       uap10.0.17763
     </UniversalWindowsPlatformTargetFrameworks>
   </PropertyGroup>

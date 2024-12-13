@@ -1,7 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFrameworks>net9.0</TargetFrameworks>
+    <TargetFrameworks>
+      $(SandboxNetFrameworkTargetFrameworks);
+      $(SandboxNetCoreTargetFrameworks)
+    </TargetFrameworks>
     <TypeScriptEnabled>false</TypeScriptEnabled>
     <Nullable>disable</Nullable>
   </PropertyGroup>

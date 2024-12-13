@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Uno.Sdk">
   <PropertyGroup>
     <TargetFrameworks>
-      net9.0-android;
-      net9.0-ios;
-      net9.0-maccatalyst;
-      net9.0-windows10.0.19041;
+      $(SandboxNetCoreAndroidTargetFrameworks);
+      $(SandboxNetCoreIOSTargetFrameworks);
+      $(SandboxNetCoreMacCatalystTargetFrameworks);
+      $(SandboxNetCoreWindowsTargetFrameworks);
       net9.0-desktop;
       net9.0-browserwasm;
     </TargetFrameworks>
