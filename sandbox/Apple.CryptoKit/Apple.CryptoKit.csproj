@@ -12,10 +12,16 @@
     <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-maccatalyst'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseNative>True</UseNative>
+    <RuntimeIdentifiers>maccatalyst-arm64;maccatalyst-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- <NativeReference Include="NativeLib/KeychainStorage.framework">
-        <IsCxx>False</IsCxx>
-      </NativeReference> -->
+      <IsCxx>False</IsCxx>
+    </NativeReference> -->
 
     <NativeReference Include="NativeLib/KeychainStorage.xcframework">
       <Kind>Framework</Kind>
