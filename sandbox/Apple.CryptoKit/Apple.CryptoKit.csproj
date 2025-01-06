@@ -4,7 +4,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <IsBindingProject>true</IsBindingProject>
-
     <!--
       Enable trim analyzers for class libraries.
       To learn more, see: https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming
@@ -12,26 +11,30 @@
     <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-maccatalyst'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <UseNative>True</UseNative>
-    <RuntimeIdentifiers>maccatalyst-arm64;maccatalyst-x64</RuntimeIdentifiers>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <!-- <NativeReference Include="NativeLib/KeychainStorage.framework">
-      <IsCxx>False</IsCxx>
-    </NativeReference> -->
-
-    <NativeReference Include="NativeLib/KeychainStorage.xcframework">
-      <Kind>Framework</Kind>
-    </NativeReference>
-  </ItemGroup>
-
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
     <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
   </ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('ios'))">
+		<NativeReference Include="NativeLib/KeychainStorage-ios.xcframework">
+			<Kind>Framework</Kind>
+			<!-- <SmartLink>False</SmartLink> -->
+		</NativeReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('maccatalyst'))">
+		<NativeReference Include="NativeLib/KeychainStorage-catalyst.xcframework">
+			<Kind>Framework</Kind>
+			<!-- <SmartLink>False</SmartLink> -->
+		</NativeReference>
+	</ItemGroup>
+
+  <!-- <ItemGroup>
+    <NativeReference Include="NativeLib/KeychainStorage.xcframework">
+      <Kind>Framework</Kind>
+    </NativeReference>
+  </ItemGroup> -->
 
   <!-- Reference to Xcode project -->
   <!-- <ItemGroup>
