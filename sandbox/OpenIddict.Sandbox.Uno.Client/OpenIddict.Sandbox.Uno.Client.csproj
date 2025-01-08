@@ -18,7 +18,8 @@
     <!-- Display name -->
     <ApplicationTitle>OpenIddict.Sandbox.Uno.Client</ApplicationTitle>
     <!-- App Identifier -->
-    <ApplicationId>com.openIddict.sandbox.uno.client</ApplicationId>
+    <!-- <ApplicationId>maccatalyst.com.bailosolutions.openIddict.sandbox.uno.client</ApplicationId> -->
+    <ApplicationId>com.openiddict.sandbox.uno.client</ApplicationId>
     <!-- Versions -->
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
@@ -52,6 +53,30 @@
       ThemeService;
     </UnoFeatures>
   </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">
+      <!-- Development certificate from developer account -->
+      <CodeSigningKey>Apple Development</CodeSigningKey>
+      <!-- This certificate for publishing app -->
+      <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
+      <EnablePackageSigning>true</EnablePackageSigning>
+      <EnableCodeSigning>true</EnableCodeSigning>
+      <!-- Should be used a development provisioning profile and linked with Development certificate -->
+      <CodesignProvision>OpenIdDict Development profile</CodesignProvision>
+  </PropertyGroup>
+
+  <!-- <Choose>
+  <When Condition="'$(TargetFramework)'=='net9.0-maccatalyst'">
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+      <CodeSigningKey>Apple Distribution: [YourCompany]. (Your ID)</CodeSigningKey>
+      <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
+      <EnablePackageSigning>true</EnablePackageSigning>
+      <EnableCodeSigning>true</EnableCodeSigning>
+      <CodesignProvision>[Your provisioning profile name]</CodesignProvision>
+    </PropertyGroup>
+  </When>
+</Choose> -->
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
